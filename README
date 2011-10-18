@@ -1,0 +1,28 @@
+MySQL Replication Monitor
+=========================
+
+Installation
+------------
+Open mysql_rep.php
+Read through the top part of the file until you get to 
+/********************************************************************************
+ *      Stop Here Unless You Know What You Are Doing !!!!!!!!!!!!!!!!!!!!!!     *
+ ********************************************************************************/
+Add users to login to the system by adding a line like
+  $user['username'] = 'an md5 password hash';
+  
+Setup the from email address
+
+Add servers to the config by adding a block of code like 
+  $server['servername']['host'] = "192.168.0.2"; //the hostname or ip address of the server
+  $server['servername']['port'] = 3306;  //optional the mysql port default to 3306
+  $server['servername']['username'] = "username";  //username to connect with.
+  $server['servername']['password'] = "password"; //password to connect with.
+  $server['servername']['email'] = 'someone@somewhere.com'; //email address to send messages to.  to add another put a , and type next address .
+Foreach server change the servername then change the approriate values.
+
+Save your file and upload to your webserver.
+
+To have the system automatically send you emails when replication stops. add an entry similar to below in your crontab
+*/5 * * * * wget -O - -q -t 1 http://www.example.com/mysql_rep.php?cron=1
+The above cron entry will run every 5 minutes
